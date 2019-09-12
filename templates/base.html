@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style type="text/css">
+	@import url(https://fonts.googleapis.com/css?family=Lato:900);
+*, *:before, *:after{
+  box-sizing:border-box;
+}
+body{
+  font-family: 'Lato', sans-serif;
+  background-color: #f1f1f1;
+}
+
+.letter{
+  display: inline-block;
+  font-weight: 900;
+  font-size: 6em;
+  position: relative;
+  color: #6149e6;
+  transform-style: preserve-3d;
+  perspective: 400;
+  z-index: 1;
+  transition: 1s;
+  text-align: center;
+}
+.letter:before, .letter:after{
+  position:absolute;
+  content: attr(data-letter);
+  transform-origin: top left;
+  top:0;
+  left:0;
+}
+.letter, .letter:before, .letter:after{
+  transition: all 0.3s ease-in-out;
+}
+.letter:before{
+  color: #f1f1f1;
+  text-shadow: 
+    -1px 0px 1px rgba(255,255,255,.8),
+    1px 0px 1px rgba(0,0,0,.8);
+  z-index: 3;
+  transform:
+    rotateX(0deg)
+    rotateY(-15deg)
+    rotateZ(0deg);
+}
+.letter:after{
+  color: rgba(0,0,0,.11);
+  z-index:2;
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(0deg)
+    rotateZ(0deg)
+    skew(0deg,1deg);
+}
+.letter:hover:before{
+  color: #f1f1f1;
+  transform:
+    rotateX(0deg)
+    rotateY(-40deg)
+    rotateZ(0deg);
+}
+.letter:hover:after{
+  transform:
+    scale(1.08,1)
+    rotateX(0deg)
+    rotateY(40deg)
+    rotateZ(0deg)
+    skew(0deg,22deg);
+}
+
+.underline{
+  position: absolute;
+  left: 30%;
+  top: 170px;
+  margin-bottom: 20px;
+  height: 3px;
+  width: 550px;
+  background: linear-gradient(90deg, #03a1f4,  #f001a5, #ffb200, #03a1f4);
+  z-index: 1;
+  transition: 2s;
+}
+
+.home_text:hover > .underline{
+  position: absolute;
+  top: 80px;
+  transition: 1s;
+}
+
+.home_text:hover > .letter{
+  color: #03a1f4;
+  transition: 1s;
+}
+
+
+</style>
+
+<script type="text/javascript">
+function search(){
+  var input = document.getElementById("tosearch").value;
+  window.location = "/search/"+input
+}
+
+</script>
+
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" href="#">Find Movies</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      {%if user.is_authenticated == False%}
+      <li class="nav-item">
+      	<a href="{% url 'login' %}"><button class="btn btn-outline-light my-2 my-sm-0" type="submit" style="margin-left:10px; margin-top:5px;">Login</button></a>
+      </li>
+
+      <li class="nav-item">
+      	<a href="{% url 'signup' %}"><button class="btn btn-outline-light my-2 my-sm-0" type="submit" style="margin-left:10px; margin-top:5px;">Sign Up</button></a>
+      </li>
+
+      {% else %}
+      	<li class="nav-item">
+      	<a href="{% url 'logout' %}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit" style="margin-left:10px; margin-top:5px;">Log Out</button></a>
+      </li>
+      {% endif %}
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="tosearch">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="search()">Search</button>
+    </div>
+  </div>
+</nav>
+	<div class="container">
+
+		
+  	<!-- __________________________________________________________________________ -->
+    {% block content %}
+    {% endblock %}
+    <!-- __________________________________________________________________________ -->
+</div>
+</body>
+</html>

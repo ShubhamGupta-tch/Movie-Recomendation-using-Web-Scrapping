@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.movie_info{
+		position: relative;
+		top: -45px;
+		left: 20px;
+	}
+</style>
+<style type="text/css">
+h2 {
+  font-size: 2em;
+  color: #e74c3c;  
+}
+.centered {
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+@media screen and (min-width: 52em) {
+    .centered {
+        max-width: 52em;
+    }
+}
+
+
+/* Card Based Layout - Base styles */
+body {
+  background: #ecf0f1;
+  line-height: 1.4;
+}
+
+.site-title {
+  color: white;
+}
+
+.card {
+  background: white;
+  margin-bottom: 2em; 
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-radius: 20px;
+  transition: 0.5s;
+}
+
+article.card:hover{
+  box-shadow: 0px 0px 10px #c0c0c0;
+}
+
+.card a {
+  color: black;
+  text-decoration: none;
+}
+
+.card-content {
+  padding: 1.4em;
+}
+
+.card-content h2 {
+  margin-top: 0;
+  margin-bottom: .5em;
+  font-weight: normal;
+}
+
+.card-content p {
+  font-size: 95%;
+}
+
+img.okay {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* Flexbox styles */
+@media screen and (min-width: 40em) {  
+  .cards {
+    margin-top: -1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    margin-bottom: 1em;
+    display: flex;
+    flex: 0 1 calc(50% - 0.5em);
+    /* width: calc(50% - 1em); */
+  }
+} /* mq 40em*/
+
+@media screen and (min-width: 60em) {
+  .cards {
+    margin-top: inherit;
+  }
+  
+  .card {
+    margin-bottom: 2em;
+    display: flex;
+    flex: 0 1 calc(33% - 0.5em);
+    /* width: calc(33% - 1em); */
+  }
+} /* mq 60em*/
+</style>
+
+  <h1>{{word}}</h1><br>
+  <span>
+  	<img class="crop" id="main_post_image" width="280" height="420" src="https://image.tmdb.org/t/p/w500{{mov_image}}" align="left"><br><br><br><br>
+  	<!--<img class="crop" id="main_post_image" width="280" height="420" src="https://moawf.com/static/background/1.jpg" align="left"><br><br><br><br>-->
+  <span class="movie_info">{{detail|safe|linebreaks}}</span>
+  <a href="{{youtube}}" target="_blank"><button class="btn btn-outline-info my-2 my-sm-0 movie_info">Watch Trailer!</button></a>
+</span>
+  <br><br><br><h3>Similar Movies</h3>
+  <span class="top">
+    <main class="main-area">
+        
+        <div class="centered">
+
+            <section class="cards">
+  {% for x in similar %}
+  	<article class="card">
+                  <a href="/search/{{x.name}}">
+                        <picture class="thumbnail">
+                            <img src="https://image.tmdb.org/t/p/w500{{x.link}}" class="okay">
+                        </picture>
+                        <div class="card-content">
+                            <h2>{{x.name}}</h2>
+                        </div><!-- .card-content -->
+
+                      </a>
+                </article>
+  {% endfor %}
+  </section></div></main>
+</span>
+{% endblock %}

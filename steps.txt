@@ -1,0 +1,17 @@
+install python 3.5
+run the following commands on the command line
+1. pip install django
+2. pip install bs4
+3. pip install requests
+4. pip install imdbpy
+5. pip install tmdbsimple
+6. pip install urllib3
+
+Then go to the directory where you have stored this file using the command line.
+Then run the following commands:
+1. python manage.py migrate
+2. python manage.py runserver
+
+Then the server should begin and then visit "http://127.0.0.1:8000"
+
+Done!
