@@ -102,8 +102,8 @@ def cool_movies(number_of_results):
 	return top_list
 
 def home(request):
-	m = top_movies(6)
-	cool = cool_movies(6)
+	m = [{'name': 'Spirited Away', 'link': '/oRvMaJOmapypFUcQqpgHMZA6qL9.jpg'}, {'name': 'The Green Mile', 'link': '/sOHqdY1RnSn6kcfAHKu28jvTebE.jpg'}, {'name': 'Léon: The Professional', 'link': '/gE8S02QUOhVnAmYu4tcrBlMTujz.jpg'}, {'name': 'Harakiri', 'link': '/57sqCOLupae705vfs98YeSfKpqA.jpg'}, {'name': 'Interstellar', 'link': '/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg'}, {'name': 'The Usual Suspects', 'link': '/jgJoRWltoS17nD5MAQ1yK2Ztefw.jpg'}]
+	cool = [{'name': '3 Idiots', 'link': '/66A9MqXOyVFCssoloscw79z8Tew.jpg'}, {'name': 'Taare Zameen Par', 'link': '/t8x4j5KtI6hZRUVtPPztNBo1q5W.jpg'}, {'name': 'Star Wars: Episode VI - Return of the Jedi', 'link': '/lrJWyjOVjPhghl4KyAMtOepAxs.jpg'}, {'name': 'Toy Story', 'link': '/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg'}, {'name': 'Reservoir Dogs', 'link': '/jX94vnfcuJ8rTnFbsoriY6dlHrC.jpg'}, {'name': 'Amadeus', 'link': '/flnoqdC38mbaulAeptjynOFO7yi.jpg'}]
 	user_recommended_movies = ''
 	if request.user.is_authenticated == True:
 		username = request.user.username
@@ -136,8 +136,8 @@ def home(request):
 	return render(request, 'home.html', context)
 
 def more(request):
-	m = top_movies(20)
-	context = {
-		'more_movies':m
-	}
-	return render(request, 'more.html', context)
+	#m = top_movies(20)
+	#context = {
+	#	'more_movies':m
+	#}
+	return render(request, 'more.html')
