@@ -8,6 +8,17 @@ This is an AI based Movie Recommendation System
 4) AI for recommendation
 5) Djnago 2.2.4
 
+# Installations:
+python 3.5
+Run the following commands on the command line:
+```
+pip install django==2.2.4
+pip install bs4
+pip install requests
+pip install imdbpy
+pip install tmdbsimple
+pip install urllib3
+```
 # Steps:
 ```
 cd Movie-Recommendation-System
