@@ -111,8 +111,18 @@ def home(request):
 		print('USER RECOMMENDED MOVIES:')
 		print(user_recommended_movies)
 		print('------------------------')
+		if len(user_recommended_movies) < 1:
+			from users.views import user_history
+			user_recommended_movies = []
+			try:
+				for x in user_history:
+					movie_name = x[username]
+					image = image(movie_name)
+					final_dict = {'name':movie_name, 'link':image}
+					user_recommended_movies.append(final_dict)
 
-
+			except:
+				pass
 	else:
 		pass
 

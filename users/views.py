@@ -33,22 +33,34 @@ def spider(url):
 	return word_list
 
 def info(movie_name):
-	a = i.search_movie(movie_name)
-	b = a[0]
-	i.update(b)
-	s = b.summary()
+	s = ''
+	try:
+		a = i.search_movie(movie_name)
+		b = a[0]
+		i.update(b)
+		s = b.summary()
+	except:
+		search = tmdb.Search()
+		response = search.movie(query=movie_name)
+		for m in search.results:
+			x = m['overview']
+			s = x
+			break
+
 	return s
 
 def image(movie_query):
-	import tmdbsimple as tmdb
-	tmdb.API_KEY = 'eb9f535abc9a24f973e9fdcb9a17c0bb'
 	image_url = ''
-	search = tmdb.Search()
-	response = search.movie(query=movie_query)
-	for s in search.results:
-		x = s['poster_path']
-		image_url = x
-		break
+	try:
+		image_url = ''
+		search = tmdb.Search()
+		response = search.movie(query=movie_query)
+		for s in search.results:
+			x = s['poster_path']
+			image_url = x
+			break
+	except:
+		pass
 	return image_url
 
 def similar(number_of_movies, movie_name_list):
@@ -61,9 +73,9 @@ def similar(number_of_movies, movie_name_list):
 			break
 
 	for x in range(s, (number_of_movies+s)):
-		mov_dict = {}
-		a = movie_name_list[x]
 		try:
+			mov_dict = {}
+			a = movie_name_list[x]
 			img = image(a)
 			if len(img) >= 1:
 				final_dict = {'name':a, 'link':img}
@@ -76,17 +88,19 @@ def similar(number_of_movies, movie_name_list):
 	return similar_movie_list
 
 def youtube_link(search_query):
+	import urllib.request
+	from bs4 import BeautifulSoup
 	yt_link = ''
 	textToSearch = search_query
 	query = urllib.parse.quote(textToSearch)
-	url = "https://www.youtube.com/results?search_query=" + query
+	url = "https://www.youtube.com/results?search_query=" + query + "trailer"
 	response = urllib.request.urlopen(url)
 	print(response)
 	html = response.read()
 	soup = BeautifulSoup(html, 'html.parser')
 	for vid in soup.findAll(attrs={'class':'yt-uix-tile-link'}):
-	    youtube = 'https://www.youtube.com' + vid['href']
-	    yt_link = youtube
+	    x = ('https://www.youtube.com' + vid['href'])
+	    yt_link = x
 	    break
 
 	return yt_link
@@ -95,20 +109,17 @@ def youtube_link(search_query):
 
 def search(request, query):
 	query = query
-
+	history.append(query)
 	if request.user.is_authenticated == True:
 		user = request.user.username
 		user_history.append({user:query})
 
-	history.append(query)
 	url = "https://www.movie-map.com/" + query + ".html"
 	movie_list = spider(url)
 	movie_info = info(query)
 	movie_image = image(query)
 	similar_movies = similar(12, movie_list)
 	yt = youtube_link(query)
-	print(similar_movies)
-	print(history)
 	#recommended_movie = recommend()
 	#recommended_movie = recommended_movie[0]
 	#new_url = "https://www.movie-map.com/" + recommended_movie + ".html"
