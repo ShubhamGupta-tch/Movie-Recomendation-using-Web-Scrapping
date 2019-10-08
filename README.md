@@ -9,8 +9,7 @@ This is an AI based Movie Recommendation System
 5) Djnago 2.2.4
 
 # Installations:
-python 3.5
-Run the following commands on the command line:
+Python 3.5
 ```
 pip install django==2.2.4
 pip install bs4
