@@ -10,7 +10,7 @@ This is an AI based Movie Recommendation System
 
 # Steps:
 ```
-cd Movie-Recommendatio-System
+cd Movie-Recommendation-System
 ```
 ```
 python manage.py makemigrations
