@@ -119,8 +119,11 @@ function randomEmoji() {
 }
 
 const emoji = randomEmoji();
+{% if user.is_authenticated %}
+const name = {{user.username}} 
+{% else %} 
 const name = prompt("What's your name?");
-
+{% endif %} 
 // Generate random chat hash if needed
 if (!location.hash) {
   location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16);
