@@ -120,7 +120,7 @@ function randomEmoji() {
 
 const emoji = randomEmoji();
 {% if user.is_authenticated %}
-const name = {{user.username}} 
+const name = "{{user.username}}";
 {% else %} 
 const name = prompt("What's your name?");
 {% endif %} 
