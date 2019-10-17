@@ -151,3 +151,6 @@ def more(request):
 	#	'more_movies':m
 	#}
 	return render(request, 'more.html')
+
+def chat(request):
+	return render(request, 'chat.html')

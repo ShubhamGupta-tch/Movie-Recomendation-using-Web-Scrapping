@@ -9,6 +9,8 @@ import urllib.request
 import tmdbsimple as tmdb
 from collections import Counter
 tmdb.API_KEY = 'eb9f535abc9a24f973e9fdcb9a17c0bb'
+from multiprocessing.pool import ThreadPool
+import time
 
 i = imdb.IMDb()
 history = []
@@ -105,6 +107,27 @@ def youtube_link(search_query):
 
 	return yt_link
 
+def all_info(movie_query):
+
+	try:
+		image_url = ''
+		movie_information = ''
+		l = []
+		mov_detail = {}
+		search = tmdb.Search()
+		response = search.movie(query=movie_query)
+		for s in search.results:
+			#image_url = s['poster_path']
+			#movie_information = s['overview']
+			mov_detail = s
+			l = search.results
+			l.remove(s)
+			break
+			
+	except:
+		pass
+
+	return mov_detail, l
 
 
 def search(request, query):
@@ -115,11 +138,19 @@ def search(request, query):
 		user_history.append({user:query})
 
 	url = "https://www.movie-map.com/" + query + ".html"
-	movie_list = spider(url)
-	movie_info = info(query)
-	movie_image = image(query)
-	similar_movies = similar(12, movie_list)
-	yt = youtube_link(query)
+	#yt = 'https://www.youtube.com/results?search_query='+query+' trailer'
+	yt = 'trailer/'
+	#movie_list = spider(url)
+	#movie_image = image(query)
+	#similar_movies = similar(12, movie_list)
+	#pool = ThreadPool(processes=3)
+	#async_result = pool.apply_async(info, [query])
+	#movie_info = async_result.get()
+	everything = all_info(query)
+	#yt = youtube_link(query)
+	movie_detail = everything[0]
+	similar_movies = everything[1]
+
 	#recommended_movie = recommend()
 	#recommended_movie = recommended_movie[0]
 	#new_url = "https://www.movie-map.com/" + recommended_movie + ".html"
@@ -128,12 +159,15 @@ def search(request, query):
 
 	context = {
 		'word': query,
-		'movie': movie_list,
-		'detail': movie_info,
-		'mov_image': movie_image,
+		'movie': movie_detail,
 		'similar': similar_movies,
-		'youtube': yt
+		'youtube': yt,
+		#'detail':movie_info,
 		#'recommend': recommended_movies_info
 	}
 	return render(request, 'search.html', context)
 	
+
+def trailer(request, query):
+	yt = youtube_link(query)
+	return render(request, 'trailer.html', {'youtube':yt})
