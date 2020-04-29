@@ -17,6 +17,7 @@ pip install requests
 pip install imdbpy
 pip install tmdbsimple
 pip install urllib3
+pip install tmdbv3api
 ```
 # Steps:
 ```
