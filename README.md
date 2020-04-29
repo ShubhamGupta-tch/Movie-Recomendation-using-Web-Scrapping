@@ -1,5 +1,5 @@
 # Movie-Recommendation-System
-This is an AI based Movie Recommendation System
+This is an Web Scraping based Movie Recommendation System
 
 ### Technologies Used:
 1) IMDb
@@ -30,4 +30,4 @@ python manage.py migrate
 ```
 python manage.py runservre
 ```
-Then go to http://127.0.0.1:8000/ to visit the website or you can see the live demo at http://134.209.146.159/
+Then go to http://127.0.0.1:8000/ to visit the website.
